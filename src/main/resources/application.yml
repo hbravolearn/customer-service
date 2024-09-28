@@ -7,10 +7,10 @@ spring:
   data:
     mongodb:
       uri: ${MONGODB_URI}
+      autoIndexCreation: true
   messages:
     basename: i18n/messages
     encoding: UTF-8
-    fallback-to-system-locale: false
   threads:
     virtual:
       enabled: true

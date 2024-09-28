@@ -128,10 +128,10 @@ class CustomerControllerTest {
                         .headers(headers))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].customerId").value("66aeee840271a2600f91d799"))
+                .andExpect(jsonPath("$[0].id").value("66aeee840271a2600f91d799"))
                 .andExpect(jsonPath("$[0].firstName").value("Peter"))
                 .andExpect(jsonPath("$[0].address.city").value("California"))
-                .andExpect(jsonPath("$[1].customerId").value("66aeee840271a2600f91d79a"))
+                .andExpect(jsonPath("$[1].id").value("66aeee840271a2600f91d79a"))
                 .andExpect(jsonPath("$[1].firstName").value("Robert"))
                 .andExpect(jsonPath("$[1].address.city").value("California"));
 
@@ -152,32 +152,32 @@ class CustomerControllerTest {
     }
 
     @Test
-    @DisplayName("Given one customer in database when find customer by customer id then return JSON customer")
-    void givenOneCustomerInDatabase_whenFindCustomerByCustomerId_thenReturnJSONCustomer() throws Exception {
-        when(customerService.findCustomerByCustomerId(anyString())).thenReturn(customerResponse1);
+    @DisplayName("Given one customer in database when find customer by id then return JSON customer")
+    void givenOneCustomerInDatabase_whenFindCustomerById_thenReturnJSONCustomer() throws Exception {
+        when(customerService.findCustomerById(anyString())).thenReturn(customerResponse1);
 
-        mockMvc.perform(get("/api/customers/{customerId}", "66aeee840271a2600f91d799")
+        mockMvc.perform(get("/api/customers/{id}", "66aeee840271a2600f91d799")
                         .headers(headers))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customerId").value("66aeee840271a2600f91d799"))
+                .andExpect(jsonPath("$.id").value("66aeee840271a2600f91d799"))
                 .andExpect(jsonPath("$.firstName").value("Peter"))
                 .andExpect(jsonPath("$.address.city").value("California"));
 
-        verify(customerService).findCustomerByCustomerId(anyString());
+        verify(customerService).findCustomerById(anyString());
     }
 
     @Test
-    @DisplayName("Given one customer is not in database when find customer by customer id then return status NOT FOUND")
-    void givenOneCustomerIsNotInDatabase_whenFindCustomerByCustomerId_thenReturnStatusNotFound() throws Exception {
-        when(customerService.findCustomerByCustomerId(anyString())).thenThrow(ResourceNotFoundException.class);
+    @DisplayName("Given one customer is not in database when find customer by id then return status NOT FOUND")
+    void givenOneCustomerIsNotInDatabase_whenFindCustomerById_thenReturnStatusNotFound() throws Exception {
+        when(customerService.findCustomerById(anyString())).thenThrow(ResourceNotFoundException.class);
 
-        mockMvc.perform(get("/api/customers/{customerId}", "66aeee845291a2632f91d95a")
+        mockMvc.perform(get("/api/customers/{id}", "66aeee845291a2632f91d95a")
                         .headers(headers))
                 .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
                 .andExpect(status().isNotFound());
 
-        verify(customerService).findCustomerByCustomerId(anyString());
+        verify(customerService).findCustomerById(anyString());
     }
 
     @Test
@@ -191,7 +191,7 @@ class CustomerControllerTest {
                         .content(objectMapper.writeValueAsString(customerRequest)))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.customerId").value("66aeee840271a2600f91d799"))
+                .andExpect(jsonPath("$.id").value("66aeee840271a2600f91d799"))
                 .andExpect(jsonPath("$.firstName").value("Peter"))
                 .andExpect(jsonPath("$.address.city").value("California"));
 
@@ -212,62 +212,62 @@ class CustomerControllerTest {
     }
 
     @Test
-    @DisplayName("Given one customer in database when update customer by customer id then return JSON updated customer")
-    void givenOneCustomerInDatabase_whenUpdateCustomerByCustomerId_thenReturnJSONUpdatedCustomer() throws Exception {
-        when(customerService.updateCustomerByCustomerId(anyString(), any(CustomerRequest.class))).thenReturn(customerResponse1);
+    @DisplayName("Given one customer in database when update customer by id then return JSON updated customer")
+    void givenOneCustomerInDatabase_whenUpdateCustomerById_thenReturnJSONUpdatedCustomer() throws Exception {
+        when(customerService.updateCustomerById(anyString(), any(CustomerRequest.class))).thenReturn(customerResponse1);
 
-        mockMvc.perform(put("/api/customers/{customerId}", "66aeee840271a2600f91d799")
+        mockMvc.perform(put("/api/customers/{id}", "66aeee840271a2600f91d799")
                         .contentType(MediaType.APPLICATION_JSON)
                         .headers(headers)
                         .content(objectMapper.writeValueAsString(customerRequest)))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customerId").value("66aeee840271a2600f91d799"))
+                .andExpect(jsonPath("$.id").value("66aeee840271a2600f91d799"))
                 .andExpect(jsonPath("$.firstName").value("Peter"))
                 .andExpect(jsonPath("$.address.city").value("California"));
 
-        verify(customerService).updateCustomerByCustomerId(anyString(), any(CustomerRequest.class));
+        verify(customerService).updateCustomerById(anyString(), any(CustomerRequest.class));
     }
 
     @Test
-    @DisplayName("Given one customer is not in database when update customer by customer id then return status NOT FOUND")
-    void givenOneCustomerIsNotInDatabase_whenUpdateCustomerByCustomerId_thenReturnStatusNotFound() throws Exception {
-        when(customerService.updateCustomerByCustomerId(anyString(), any(CustomerRequest.class)))
+    @DisplayName("Given one customer is not in database when update customer by id then return status NOT FOUND")
+    void givenOneCustomerIsNotInDatabase_whenUpdateCustomerById_thenReturnStatusNotFound() throws Exception {
+        when(customerService.updateCustomerById(anyString(), any(CustomerRequest.class)))
                 .thenThrow(ResourceNotFoundException.class);
 
-        mockMvc.perform(put("/api/customers/{customerId}", "66aeee845291a2632f91d95a")
+        mockMvc.perform(put("/api/customers/{id}", "66aeee845291a2632f91d95a")
                         .contentType(MediaType.APPLICATION_JSON)
                         .headers(headers)
                         .content(objectMapper.writeValueAsString(customerRequest)))
                 .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
                 .andExpect(status().isNotFound());
 
-        verify(customerService).updateCustomerByCustomerId(anyString(), any(CustomerRequest.class));
+        verify(customerService).updateCustomerById(anyString(), any(CustomerRequest.class));
     }
 
     @Test
-    @DisplayName("Given one customer in database when delete customer by customer id then return status NO CONTENT")
+    @DisplayName("Given one customer in database when delete customer by id then return status NO CONTENT")
     void givenOneCustomerInDatabase_whenDeleteCustomerById_thenReturnStatusOKAndJSONDeletedMessage() throws Exception {
-        doNothing().when(customerService).deleteCustomerByCustomerId(anyString());
+        doNothing().when(customerService).deleteCustomerById(anyString());
 
-        mockMvc.perform(delete("/api/customers/{customerId}", "66aeee840271a2600f91d799")
+        mockMvc.perform(delete("/api/customers/{id}", "66aeee840271a2600f91d799")
                         .headers(headers))
                 .andExpect(status().isNoContent());
 
-        verify(customerService).deleteCustomerByCustomerId(anyString());
+        verify(customerService).deleteCustomerById(anyString());
     }
 
     @Test
-    @DisplayName("Given one customer is not in database when delete customer by customer id then return status NOT FOUND")
-    void givenOneCustomerIsNotInDatabase_whenDeleteCustomerByCustomerId_thenReturnStatusNotFound() throws Exception {
-        doThrow(ResourceNotFoundException.class).when(customerService).deleteCustomerByCustomerId(anyString());
+    @DisplayName("Given one customer is not in database when delete customer by id then return status NOT FOUND")
+    void givenOneCustomerIsNotInDatabase_whenDeleteCustomerById_thenReturnStatusNotFound() throws Exception {
+        doThrow(ResourceNotFoundException.class).when(customerService).deleteCustomerById(anyString());
 
-        mockMvc.perform(delete("/api/customers/{customerId}", "66aeee845291a2632f91d95a")
+        mockMvc.perform(delete("/api/customers/{id}", "66aeee845291a2632f91d95a")
                         .headers(headers))
                 .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
                 .andExpect(status().isNotFound());
 
-        verify(customerService).deleteCustomerByCustomerId(anyString());
+        verify(customerService).deleteCustomerById(anyString());
     }
 
 }

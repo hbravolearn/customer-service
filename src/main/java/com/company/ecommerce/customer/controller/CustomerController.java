@@ -34,8 +34,8 @@ public class CustomerController implements CustomerApi {
     }
 
     @Override
-    public ResponseEntity<CustomerResponse> findCustomerByCustomerId(String customerId) {
-        var customerResponse = this.customerService.findCustomerByCustomerId(customerId);
+    public ResponseEntity<CustomerResponse> findCustomerById(String id) {
+        var customerResponse = this.customerService.findCustomerById(id);
         return ResponseEntity.status(OK).body(customerResponse);
     }
 
@@ -46,15 +46,15 @@ public class CustomerController implements CustomerApi {
     }
 
     @Override
-    public ResponseEntity<CustomerResponse> updateCustomerByCustomerId(
-            String customerId, CustomerRequest customerRequest) {
-        var customerResponse = this.customerService.updateCustomerByCustomerId(customerId, customerRequest);
+    public ResponseEntity<CustomerResponse> updateCustomerById(
+            String id, CustomerRequest customerRequest) {
+        var customerResponse = this.customerService.updateCustomerById(id, customerRequest);
         return ResponseEntity.status(OK).body(customerResponse);
     }
 
     @Override
-    public ResponseEntity<Void> deleteCustomerByCustomerId(String customerId) {
-        this.customerService.deleteCustomerByCustomerId(customerId);
+    public ResponseEntity<Void> deleteCustomerById(String id) {
+        this.customerService.deleteCustomerById(id);
         return ResponseEntity.status(NO_CONTENT).build();
     }
 

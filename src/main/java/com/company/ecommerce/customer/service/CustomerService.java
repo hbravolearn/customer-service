@@ -8,9 +8,9 @@ import java.util.List;
 public interface CustomerService {
 
     List<CustomerResponse> findAllCustomers();
-    CustomerResponse findCustomerByCustomerId(String customerId);
+    CustomerResponse findCustomerById(String id);
     CustomerResponse createCustomer(CustomerRequest customerRequest);
-    CustomerResponse updateCustomerByCustomerId(String customerId, CustomerRequest customerRequest);
-    void deleteCustomerByCustomerId(String customerId);
+    CustomerResponse updateCustomerById(String id, CustomerRequest customerRequest);
+    void deleteCustomerById(String id);
 
 }

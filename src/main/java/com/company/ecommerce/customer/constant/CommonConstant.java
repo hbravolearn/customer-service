@@ -14,6 +14,7 @@ public final class CommonConstant {
     public static final String CUSTOMER_EMAIL_INVALID_FORMAT_KEY = "{message.customer.email.invalid-format}";
     public static final String CUSTOMER_PHONE_NUMBER_REQUIRED_KEY = "{message.customer.phone-number.required}";
     public static final String CUSTOMER_PHONE_NUMBER_INVALID_FORMAT_KEY = "{message.customer.phone-number.invalid-format}";
+    public static final String CUSTOMER_STREET_REQUIRED_KEY = "{message.customer.street.required}";
     public static final String CUSTOMER_CITY_REQUIRED_KEY = "{message.customer.city.required}";
     public static final String CUSTOMER_STATE_REQUIRED_KEY = "{message.customer.state.required}";
     public static final String CUSTOMER_ZIP_CODE_REQUIRED_KEY = "{message.customer.zip-code.required}";

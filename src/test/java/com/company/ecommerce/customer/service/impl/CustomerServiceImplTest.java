@@ -83,7 +83,7 @@ class CustomerServiceImplTest {
         address2.setCountry("USA");
 
         customer1 = new Customer();
-        customer1.setCustomerId("66aeee840271a2600f91d799");
+        customer1.setId("66aeee840271a2600f91d799");
         customer1.setFirstName("Peter");
         customer1.setLastName("Larson");
         customer1.setEmail("plarson@gmail.com");
@@ -91,7 +91,7 @@ class CustomerServiceImplTest {
         customer1.setAddress(address1);
 
         customer2 = new Customer();
-        customer2.setCustomerId("66aeee840271a2600f91d79a");
+        customer2.setId("66aeee840271a2600f91d79a");
         customer2.setFirstName("Robert");
         customer2.setLastName("Brown");
         customer2.setEmail("rbrown@gmail.com");
@@ -149,11 +149,11 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    @DisplayName("Given one customer in database when find customer by customer id then return customer")
-    void givenOneCustomerInDatabase_whenFindCustomerByCustomerId_thenReturnCustomer() {
+    @DisplayName("Given one customer in database when find customer by id then return customer")
+    void givenOneCustomerInDatabase_whenFindCustomerById_thenReturnCustomer() {
         when(customerRepository.findById(anyString())).thenReturn(Optional.of(customer1));
 
-        var customerResponseDto = customerService.findCustomerByCustomerId("66aeee840271a2600f91d799");
+        var customerResponseDto = customerService.findCustomerById("66aeee840271a2600f91d799");
 
         assertThat(customerResponseDto)
                 .isNotNull()
@@ -163,15 +163,15 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    @DisplayName("Given one customer is not in database when find customer by customer id then return customer not found")
-    void givenOneCustomerIsNotInDatabase_whenFindCustomerByCustomerId_thenReturnCustomerNotFound() {
+    @DisplayName("Given one customer is not in database when find customer by id then return customer not found")
+    void givenOneCustomerIsNotInDatabase_whenFindCustomerById_thenReturnCustomerNotFound() {
         when(customerRepository.findById(anyString())).thenReturn(Optional.empty());
         when(messageSource.getMessage(eq(CUSTOMER_NOT_FOUND_KEY), any(), any(Locale.class)))
-                .thenReturn("Customer with customer id 66aeee845291a2632f91d95a not found");
+                .thenReturn("Customer with id 66aeee845291a2632f91d95a not found");
 
-        assertThatThrownBy(() -> customerService.findCustomerByCustomerId("66aeee845291a2632f91d95a"))
+        assertThatThrownBy(() -> customerService.findCustomerById("66aeee845291a2632f91d95a"))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessageContaining("Customer with customer id 66aeee845291a2632f91d95a not found");
+                .hasMessageContaining("Customer with id 66aeee845291a2632f91d95a not found");
 
         verify(customerRepository).findById(anyString());
         verify(messageSource).getMessage(anyString(), any(), any(Locale.class));
@@ -192,13 +192,13 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    @DisplayName("Given one customer in database to edit when update customer by customer id then return updated customer")
-    void givenOneCustomerInDatabaseToEdit_whenUpdateCustomerByCustomerId_thenReturnUpdatedCustomer() {
+    @DisplayName("Given one customer in database to edit when update customer by id then return updated customer")
+    void givenOneCustomerInDatabaseToEdit_whenUpdateCustomerById_thenReturnUpdatedCustomer() {
         when(customerRepository.findById(anyString())).thenReturn(Optional.of(customer1));
         when(customerRepository.save(any(Customer.class))).thenReturn(customer1);
 
-        CustomerResponse customerResponse = customerService.updateCustomerByCustomerId(
-                customer1.getCustomerId(), customerRequest);
+        CustomerResponse customerResponse = customerService.updateCustomerById(
+                customer1.getId(), customerRequest);
 
         assertThat(customerResponse)
                 .isNotNull()
@@ -209,16 +209,16 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    @DisplayName("Given one customer is not in database when update customer by customer id then return customer not found")
-    void givenOneCustomerIsNotInDatabase_whenUpdateCustomerByCustomerId_thenReturnCustomerNotFound() {
+    @DisplayName("Given one customer is not in database when update customer by id then return customer not found")
+    void givenOneCustomerIsNotInDatabase_whenUpdateCustomerById_thenReturnCustomerNotFound() {
         when(customerRepository.findById(anyString())).thenReturn(Optional.empty());
         when(messageSource.getMessage(eq(CUSTOMER_NOT_FOUND_KEY), any(), any(Locale.class)))
-                .thenReturn("Customer with customer id 66aeee845291a2632f91d95a not found");
+                .thenReturn("Customer with id 66aeee845291a2632f91d95a not found");
 
-        assertThatThrownBy(() -> customerService.updateCustomerByCustomerId(
+        assertThatThrownBy(() -> customerService.updateCustomerById(
                 "66aeee845291a2632f91d95a", customerRequest))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessageContaining("Customer with customer id 66aeee845291a2632f91d95a not found");
+                .hasMessageContaining("Customer with id 66aeee845291a2632f91d95a not found");
 
         verify(customerRepository).findById(anyString());
         verify(customerRepository, never()).save(any(Customer.class));
@@ -226,28 +226,28 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    @DisplayName("Given one customer in database when delete customer by customer id then remove customer")
-    void givenOneCustomerInDatabase_whenDeleteCustomerByCustomerId_thenRemoveCustomer() {
+    @DisplayName("Given one customer in database when delete customer by id then remove customer")
+    void givenOneCustomerInDatabase_whenDeleteCustomerById_thenRemoveCustomer() {
         when(customerRepository.findById(anyString())).thenReturn(Optional.of(customer2));
 
         doNothing().when(customerRepository).deleteById(anyString());
 
-        customerService.deleteCustomerByCustomerId(customer2.getCustomerId());
+        customerService.deleteCustomerById(customer2.getId());
 
         verify(customerRepository).findById(anyString());
         verify(customerRepository).deleteById(anyString());
     }
 
     @Test
-    @DisplayName("Given one customer is not in database when delete customer by customer id then return customer not found")
-    void givenOneCustomerIsNotInDatabase_whenDeleteCustomerByCustomerId_thenReturnCustomerNotFound() {
+    @DisplayName("Given one customer is not in database when delete customer by id then return customer not found")
+    void givenOneCustomerIsNotInDatabase_whenDeleteCustomerById_thenReturnCustomerNotFound() {
         when(customerRepository.findById(anyString())).thenReturn(Optional.empty());
         when(messageSource.getMessage(eq(CUSTOMER_NOT_FOUND_KEY), any(), any(Locale.class)))
-                .thenReturn("Customer with customer id 66aeee840271a2600f91d79a not found");
+                .thenReturn("Customer with id 66aeee840271a2600f91d79a not found");
 
-        assertThatThrownBy(() -> customerService.deleteCustomerByCustomerId("66aeee840271a2600f91d79a"))
+        assertThatThrownBy(() -> customerService.deleteCustomerById("66aeee840271a2600f91d79a"))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessageContaining("Customer with customer id 66aeee840271a2600f91d79a not found");
+                .hasMessageContaining("Customer with id 66aeee840271a2600f91d79a not found");
 
         verify(customerRepository).findById(anyString());
         verify(customerRepository, never()).deleteById(anyString());

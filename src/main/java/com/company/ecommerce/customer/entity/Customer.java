@@ -20,12 +20,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Customer extends Auditable {
 
     @Id
-    private String customerId;
+    private String id;
 
     private String firstName;
     private String lastName;
 
-    @Indexed(unique = true)
+    @Indexed(name = "uix_email", unique = true)
     private String email;
 
     private String phoneNumber;

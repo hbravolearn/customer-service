@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.CLASS;
 
 @Retention(CLASS)
-@Mapping(target = "customerId", ignore = true)
+@Mapping(target = "id", ignore = true)
 @Mapping(target = "version", ignore = true)
 @Mapping(target = "createdBy", ignore = true)
 @Mapping(target = "createdAt", ignore = true)

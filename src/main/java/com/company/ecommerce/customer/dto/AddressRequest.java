@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import static com.company.ecommerce.customer.constant.CommonConstant.CUSTOMER_CITY_REQUIRED_KEY;
 import static com.company.ecommerce.customer.constant.CommonConstant.CUSTOMER_COUNTRY_REQUIRED_KEY;
 import static com.company.ecommerce.customer.constant.CommonConstant.CUSTOMER_STATE_REQUIRED_KEY;
+import static com.company.ecommerce.customer.constant.CommonConstant.CUSTOMER_STREET_REQUIRED_KEY;
 import static com.company.ecommerce.customer.constant.CommonConstant.CUSTOMER_ZIP_CODE_REQUIRED_KEY;
 
 @Schema(name = "AddressRequest", description = "Schema to request address information")
@@ -14,7 +15,7 @@ import static com.company.ecommerce.customer.constant.CommonConstant.CUSTOMER_ZI
 public record AddressRequest(
 
         @Schema(name = "street", description = "Customer street", example = "218 Newbury Street")
-        @NotEmpty(message = CUSTOMER_CITY_REQUIRED_KEY)
+        @NotEmpty(message = CUSTOMER_STREET_REQUIRED_KEY)
         String street,
 
         @Schema(name = "city", description = "Customer city", example = "Chicago")

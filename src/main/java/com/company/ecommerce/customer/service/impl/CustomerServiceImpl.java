@@ -38,12 +38,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional(readOnly = true)
-    public CustomerResponse findCustomerByCustomerId(String customerId) {
+    public CustomerResponse findCustomerById(String id) {
         var locale = LocaleContextHolder.getLocale();
-        var customer = customerRepository.findById(customerId)
+        var customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        messageSource, CUSTOMER_NOT_FOUND_KEY, customerId, locale));
-        log.info("Customer with customer id {} find successfully", customer.getCustomerId());
+                        messageSource, CUSTOMER_NOT_FOUND_KEY, id, locale));
+        log.info("Customer with id {} find successfully", customer.getId());
         return customerMapper.mapToCustomerResponse(customer);
     }
 
@@ -52,34 +52,34 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerResponse createCustomer(CustomerRequest customerRequest) {
         var customer = customerMapper.mapToCustomer(customerRequest);
         var savedCustomer = customerRepository.save(customer);
-        log.info("Customer with customer id {} created successfully", savedCustomer.getCustomerId());
+        log.info("Customer with id {} created successfully", savedCustomer.getId());
         return customerMapper.mapToCustomerResponse(savedCustomer);
     }
 
     @Override
     @Transactional
-    public CustomerResponse updateCustomerByCustomerId(String customerId, CustomerRequest customerRequest) {
+    public CustomerResponse updateCustomerById(String id, CustomerRequest customerRequest) {
         var locale = LocaleContextHolder.getLocale();
-        var customer = customerRepository.findById(customerId)
+        var customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        messageSource, CUSTOMER_NOT_FOUND_KEY, customerId, locale));
+                        messageSource, CUSTOMER_NOT_FOUND_KEY, id, locale));
 
         customerMapper.mergeCustomer(customerRequest, customer);
         var updatedCustomer = customerRepository.save(customer);
-        log.info("Customer with customer id {} update successfully", updatedCustomer.getCustomerId());
+        log.info("Customer with id {} update successfully", updatedCustomer.getId());
         return customerMapper.mapToCustomerResponse(updatedCustomer);
     }
 
     @Override
     @Transactional
-    public void deleteCustomerByCustomerId(String customerId) {
+    public void deleteCustomerById(String id) {
         var locale = LocaleContextHolder.getLocale();
-        var customer = customerRepository.findById(customerId)
+        var customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        messageSource, CUSTOMER_NOT_FOUND_KEY, customerId, locale));
+                        messageSource, CUSTOMER_NOT_FOUND_KEY, id, locale));
 
-        customerRepository.deleteById(customer.getCustomerId());
-        log.info("Customer with customer id {} deleted successfully", customer.getCustomerId());
+        customerRepository.deleteById(customer.getId());
+        log.info("Customer with id {} deleted successfully", customer.getId());
     }
 
 }

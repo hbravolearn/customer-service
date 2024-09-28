@@ -71,7 +71,7 @@ class CustomerRepositoryTest {
         address3.setCountry("USA");
 
         customer1 = new Customer();
-        customer1.setCustomerId("66aeee840271a2600f91d799");
+        customer1.setId("66aeee840271a2600f91d799");
         customer1.setFirstName("Peter");
         customer1.setLastName("Larson");
         customer1.setEmail("plarson@gmail.com");
@@ -79,7 +79,7 @@ class CustomerRepositoryTest {
         customer1.setAddress(address1);
 
         customer2 = new Customer();
-        customer2.setCustomerId("66aeee840271a2600f91d79a");
+        customer2.setId("66aeee840271a2600f91d79a");
         customer2.setFirstName("Robert");
         customer2.setLastName("Brown");
         customer2.setEmail("rbrown@gmail.com");
@@ -87,7 +87,7 @@ class CustomerRepositoryTest {
         customer2.setAddress(address2);
 
         customer3 = new Customer();
-        customer3.setCustomerId("66aeee845291a2632f91d95a");
+        customer3.setId("66aeee845291a2632f91d95a");
         customer3.setFirstName("Nelson");
         customer3.setLastName("Patrick");
         customer3.setEmail("npatrick@gmail.com");
@@ -116,7 +116,7 @@ class CustomerRepositoryTest {
     @Test
     @DisplayName("Given one customer in database when find by id then return one customer")
     void givenOneCustomerInDatabase_whenFindById_thenReturnOneCustomer() {
-        Optional<Customer> foundCustomerOptional = customerRepository.findById(customer1.getCustomerId());
+        Optional<Customer> foundCustomerOptional = customerRepository.findById(customer1.getId());
 
         assertThat(foundCustomerOptional)
                 .isPresent();
@@ -151,9 +151,9 @@ class CustomerRepositoryTest {
     @Test
     @DisplayName("Given one customer in database when delete by id then remove customer")
     void givenOneCustomerInDatabase_whenDeleteById_thenDeleteCustomerRecordInDatabase() {
-        customerRepository.deleteById(customer2.getCustomerId());
+        customerRepository.deleteById(customer2.getId());
 
-        Optional<Customer> foundCustomerOptional = customerRepository.findById(customer2.getCustomerId());
+        Optional<Customer> foundCustomerOptional = customerRepository.findById(customer2.getId());
 
         assertThat(foundCustomerOptional)
                 .isEmpty();

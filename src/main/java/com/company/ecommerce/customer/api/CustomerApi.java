@@ -72,7 +72,7 @@ public interface CustomerApi {
     )
     ResponseEntity<List<CustomerResponse>> findAllCustomers();
 
-    @GetMapping("/{customerId}")
+    @GetMapping("/{id}")
     @Operation(
             summary = "Find customer by id",
             description = "REST API to find customer by id",
@@ -94,7 +94,7 @@ public interface CustomerApi {
                             schema = @Schema(type = "string")
                     ),
                     @Parameter(
-                            name = "customerId",
+                            name = "id",
                             in = PATH,
                             description = "Customer id",
                             example = "34ffabc840271a2600f50d326",
@@ -129,7 +129,7 @@ public interface CustomerApi {
                     )
             }
     )
-    ResponseEntity<CustomerResponse> findCustomerByCustomerId(@PathVariable String customerId);
+    ResponseEntity<CustomerResponse> findCustomerById(@PathVariable String id);
 
     @PostMapping
     @Operation(
@@ -190,7 +190,7 @@ public interface CustomerApi {
     )
     ResponseEntity<CustomerResponse> createCustomer(@Valid @RequestBody CustomerRequest customerRequest);
 
-    @PutMapping("/{customerId}")
+    @PutMapping("/{id}")
     @Operation(
             summary = "Update customer by id",
             description = "REST API to update customer by id",
@@ -212,7 +212,7 @@ public interface CustomerApi {
                             schema = @Schema(type = "string")
                     ),
                     @Parameter(
-                            name = "customerId",
+                            name = "id",
                             in = PATH,
                             description = "Customer id",
                             example = "34ffabc840271a2600f50d326",
@@ -263,10 +263,10 @@ public interface CustomerApi {
                     )
             }
     )
-    ResponseEntity<CustomerResponse> updateCustomerByCustomerId(
-            @PathVariable String customerId, @Valid @RequestBody CustomerRequest customerRequest);
+    ResponseEntity<CustomerResponse> updateCustomerById(
+            @PathVariable String id, @Valid @RequestBody CustomerRequest customerRequest);
 
-    @DeleteMapping("/{customerId}")
+    @DeleteMapping("/{id}")
     @Operation(
             summary = "Delete customer by id",
             description = "REST API to delete customer by id",
@@ -288,7 +288,7 @@ public interface CustomerApi {
                             schema = @Schema(type = "string")
                     ),
                     @Parameter(
-                            name = "customerId",
+                            name = "id",
                             in = PATH,
                             description = "Customer id",
                             example = "34ffabc840271a2600f50d326",
@@ -319,6 +319,6 @@ public interface CustomerApi {
                     )
             }
     )
-    ResponseEntity<Void> deleteCustomerByCustomerId(@PathVariable String customerId);
+    ResponseEntity<Void> deleteCustomerById(@PathVariable String id);
 
 }
