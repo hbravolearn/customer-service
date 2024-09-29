@@ -7,7 +7,6 @@ import com.company.ecommerce.customer.mapper.CustomerMapper;
 import com.company.ecommerce.customer.repository.CustomerRepository;
 import com.company.ecommerce.customer.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import static com.company.ecommerce.customer.constant.CommonConstant.CUSTOMER_NO
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class CustomerServiceImpl implements CustomerService {
 
     private final MessageSource messageSource;
@@ -30,7 +28,6 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional(readOnly = true)
     public List<CustomerResponse> findAllCustomers() {
         var customers = customerRepository.findAll();
-        log.info("Customers find successfully");
         return customers.stream()
                 .map(customerMapper::mapToCustomerResponse)
                 .toList();
@@ -43,7 +40,6 @@ public class CustomerServiceImpl implements CustomerService {
         var customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         messageSource, CUSTOMER_NOT_FOUND_KEY, id, locale));
-        log.info("Customer with id {} find successfully", customer.getId());
         return customerMapper.mapToCustomerResponse(customer);
     }
 
@@ -52,7 +48,6 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerResponse createCustomer(CustomerRequest customerRequest) {
         var customer = customerMapper.mapToCustomer(customerRequest);
         var savedCustomer = customerRepository.save(customer);
-        log.info("Customer with id {} created successfully", savedCustomer.getId());
         return customerMapper.mapToCustomerResponse(savedCustomer);
     }
 
@@ -66,7 +61,6 @@ public class CustomerServiceImpl implements CustomerService {
 
         customerMapper.mergeCustomer(customerRequest, customer);
         var updatedCustomer = customerRepository.save(customer);
-        log.info("Customer with id {} update successfully", updatedCustomer.getId());
         return customerMapper.mapToCustomerResponse(updatedCustomer);
     }
 
@@ -79,7 +73,6 @@ public class CustomerServiceImpl implements CustomerService {
                         messageSource, CUSTOMER_NOT_FOUND_KEY, id, locale));
 
         customerRepository.deleteById(customer.getId());
-        log.info("Customer with id {} deleted successfully", customer.getId());
     }
 
 }
