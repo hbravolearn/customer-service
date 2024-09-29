@@ -5,6 +5,10 @@ public final class CommonConstant {
     private CommonConstant() {
     }
 
+    public static final int MAX_STRING_LENGTH = 100;
+    public static final int MAX_LIST_SIZE = 5;
+    public static final int MAX_ARRAY_SIZE = 5;
+
     public static final String X_API_VERSION_V1 = "X-Api-Version=v1";
 
     public static final String CUSTOMER_NOT_FOUND_KEY = "message.customer.not-found";

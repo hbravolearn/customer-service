@@ -23,4 +23,5 @@ public record CustomerResponse(
         AddressResponse address
 
 ) {
+
 }

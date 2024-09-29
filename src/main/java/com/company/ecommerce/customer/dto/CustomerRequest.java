@@ -38,4 +38,5 @@ public record CustomerRequest(
         AddressRequest address
 
 ) {
+
 }
