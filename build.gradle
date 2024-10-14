@@ -33,10 +33,24 @@ ext {
 }
 
 jacocoTestReport {
+	dependsOn test
+
 	reports {
 		xml.required = true
+		html.required = true
 	}
-	dependsOn test
+
+	afterEvaluate {
+		classDirectories.setFrom(
+				files(classDirectories.files.collect {
+					fileTree(dir: it, include: [
+							"com/company/ecommerce/customer/repository/**",
+							"com/company/ecommerce/customer/service/impl/**",
+							"com/company/ecommerce/customer/controller/impl/**"
+					])
+				})
+		)
+	}
 }
 
 sonar {
