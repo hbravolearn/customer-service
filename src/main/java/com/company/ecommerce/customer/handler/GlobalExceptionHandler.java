@@ -1,10 +1,13 @@
-package com.company.ecommerce.customer.exception;
+package com.company.ecommerce.customer.handler;
 
+import com.company.ecommerce.customer.exception.BusinessException;
+import com.company.ecommerce.customer.exception.ResourceNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -18,6 +21,7 @@ import java.util.Set;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
@@ -29,6 +33,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ProblemDetail> handleException(RuntimeException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(INTERNAL_SERVER_ERROR, ex.getMessage());
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(problemDetail);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ProblemDetail> handleAccessDeniedException(AccessDeniedException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(FORBIDDEN, ex.getMessage());
+        return ResponseEntity.status(FORBIDDEN).body(problemDetail);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)

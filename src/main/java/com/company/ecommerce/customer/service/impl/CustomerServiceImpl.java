@@ -37,18 +37,16 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional(readOnly = true)
     public CustomerResponse findCustomerById(String id) {
         var locale = LocaleContextHolder.getLocale();
-        var customer = customerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        messageSource, CUSTOMER_NOT_FOUND_KEY, id, locale));
-        return customerMapper.mapToCustomerResponse(customer);
+        return customerRepository.findById(id)
+                .map(customerMapper::mapToCustomerResponse)
+                .orElseThrow(() -> new ResourceNotFoundException(messageSource, CUSTOMER_NOT_FOUND_KEY, id, locale));
     }
 
     @Override
     @Transactional
     public CustomerResponse createCustomer(CustomerRequest customerRequest) {
         var customer = customerMapper.mapToCustomer(customerRequest);
-        var savedCustomer = customerRepository.save(customer);
-        return customerMapper.mapToCustomerResponse(savedCustomer);
+        return customerMapper.mapToCustomerResponse(customerRepository.save(customer));
     }
 
     @Override
@@ -60,8 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
                         messageSource, CUSTOMER_NOT_FOUND_KEY, id, locale));
 
         customerMapper.mergeCustomer(customerRequest, customer);
-        var updatedCustomer = customerRepository.save(customer);
-        return customerMapper.mapToCustomerResponse(updatedCustomer);
+        return customerMapper.mapToCustomerResponse(customerRepository.save(customer));
     }
 
     @Override
@@ -69,8 +66,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomerById(String id) {
         var locale = LocaleContextHolder.getLocale();
         var customer = customerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        messageSource, CUSTOMER_NOT_FOUND_KEY, id, locale));
+                .orElseThrow(() -> new ResourceNotFoundException(messageSource, CUSTOMER_NOT_FOUND_KEY, id, locale));
 
         customerRepository.deleteById(customer.getId());
     }

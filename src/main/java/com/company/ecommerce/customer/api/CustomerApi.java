@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,6 +59,14 @@ public interface CustomerApi {
                                     array = @ArraySchema(
                                             schema = @Schema(implementation = CustomerResponse.class)
                                     )
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "403",
+                            description = "Http status FORBIDDEN",
+                            content = @Content(
+                                    mediaType = APPLICATION_PROBLEM_JSON_VALUE,
+                                    schema = @Schema(implementation = ProblemDetail.class)
                             )
                     ),
                     @ApiResponse(
@@ -109,6 +118,14 @@ public interface CustomerApi {
                             content = @Content(
                                     mediaType = APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = CustomerResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "403",
+                            description = "Http status FORBIDDEN",
+                            content = @Content(
+                                    mediaType = APPLICATION_PROBLEM_JSON_VALUE,
+                                    schema = @Schema(implementation = ProblemDetail.class)
                             )
                     ),
                     @ApiResponse(
@@ -173,6 +190,22 @@ public interface CustomerApi {
                     @ApiResponse(
                             responseCode = "400",
                             description = "Http status BAD REQUEST",
+                            content = @Content(
+                                    mediaType = APPLICATION_PROBLEM_JSON_VALUE,
+                                    schema = @Schema(implementation = ProblemDetail.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "403",
+                            description = "Http status FORBIDDEN",
+                            content = @Content(
+                                    mediaType = APPLICATION_PROBLEM_JSON_VALUE,
+                                    schema = @Schema(implementation = ProblemDetail.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "409",
+                            description = "Http status CONFLICT",
                             content = @Content(
                                     mediaType = APPLICATION_PROBLEM_JSON_VALUE,
                                     schema = @Schema(implementation = ProblemDetail.class)
@@ -246,8 +279,24 @@ public interface CustomerApi {
                             )
                     ),
                     @ApiResponse(
+                            responseCode = "403",
+                            description = "Http status FORBIDDEN",
+                            content = @Content(
+                                    mediaType = APPLICATION_PROBLEM_JSON_VALUE,
+                                    schema = @Schema(implementation = ProblemDetail.class)
+                            )
+                    ),
+                    @ApiResponse(
                             responseCode = "404",
                             description = "Http status NOT FOUND",
+                            content = @Content(
+                                    mediaType = APPLICATION_PROBLEM_JSON_VALUE,
+                                    schema = @Schema(implementation = ProblemDetail.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "409",
+                            description = "Http status CONFLICT",
                             content = @Content(
                                     mediaType = APPLICATION_PROBLEM_JSON_VALUE,
                                     schema = @Schema(implementation = ProblemDetail.class)
@@ -300,6 +349,14 @@ public interface CustomerApi {
                     @ApiResponse(
                             responseCode = "204",
                             description = "Http status NO CONTENT"
+                    ),
+                    @ApiResponse(
+                            responseCode = "403",
+                            description = "Http status FORBIDDEN",
+                            content = @Content(
+                                    mediaType = APPLICATION_PROBLEM_JSON_VALUE,
+                                    schema = @Schema(implementation = ProblemDetail.class)
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "404",

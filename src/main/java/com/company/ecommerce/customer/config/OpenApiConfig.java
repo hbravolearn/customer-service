@@ -1,5 +1,6 @@
 package com.company.ecommerce.customer.config;
 
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -27,22 +28,14 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
                 ),
                 version = "1.0.0"
         ),
+        externalDocs = @ExternalDocumentation(
+                description = "For more information visit the wiki",
+                url = "https://docs.company.com/api/wiki"
+        ),
         servers = {
                 @Server(
                         description = "LOCAL SERVER",
-                        url = "http://localhost:8081"
-                ),
-                @Server(
-                        description = "DEV SERVER",
-                        url = "http://dev.company.com"
-                ),
-                @Server(
-                        description = "QA SERVER",
-                        url = "http://qa.company.com"
-                ),
-                @Server(
-                        description = "PROD SERVER",
-                        url = "http://company.com"
+                        url = "http://localhost:8080"
                 )
         }
 )

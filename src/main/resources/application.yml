@@ -1,25 +1,5 @@
-server:
-  port: 8080
-
 spring:
   application:
     name: customer-service
-  data:
-    mongodb:
-      uri: ${MONGODB_URI}
-      autoIndexCreation: true
-  messages:
-    basename: i18n/messages
-    encoding: UTF-8
-  threads:
-    virtual:
-      enabled: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, info, prometheus
-  endpoint:
-    health:
-      show-details: always
+  config:
+    import: optional:configserver:http://localhost:8888

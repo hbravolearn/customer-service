@@ -8,7 +8,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MongoDBContainer;
@@ -30,9 +32,11 @@ class CustomerRepositoryTest {
 
     @DynamicPropertySource
     static void containersProperties(DynamicPropertyRegistry registry) {
-        mongoDBContainer.start();
         registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
     }
+
+    @MockBean
+    private JwtDecoder jwtDecoder;
 
     @Autowired
     private MongoTemplate mongoTemplate;
